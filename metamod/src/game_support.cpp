@@ -22,6 +22,7 @@ const game_modinfo_t g_known_games[] = {
 	{ "bumpercars",         nullptr,                    "hl.dll",                    "Bumper Cars"                                      }, // have no linux binary found!
 	{ "buzzybots",          nullptr,                    "bb.dll",                    "BuzzyBots"                                        }, // have no linux binary found!
 	{ "ckf3",               nullptr,                    "mp.dll",                    "Chicken Fortress 3"                               }, // have no linux binary found!, checked all versions (latest - Alpha 4)
+	{ "cryoffear",          "cl_dlls/hl.so",            "cl_dlls/hl.dll",            "Cry of Fear"                                      }, // ReCoF: its game dll lives in cl_dlls
 	{ "cs10",               nullptr,                    "mp.dll",                    "Counter-Strike 1.0"                               }, // have no linux binary found!
 	{ "csv15",              nullptr,                    "mp.dll",                    "Counter-Strike 1.5"                               }, // have no linux binary found!
 	{ "cstrike",            "cs.so",                    "mp.dll",                    "Counter-Strike 1.6"                               }, // ok
@@ -107,6 +108,12 @@ const game_modinfo_t g_known_games[] = {
 	{ nullptr, nullptr, nullptr, nullptr }
 };
 
+// ReCoF: a known game whose dll is not in dlls/ names its folder in the table (Cry of Fear keeps hl.dll in cl_dlls)
+static const char *known_dll_folder(const char *knowndll)
+{
+	return strchr(knowndll, '/') ? "" : "dlls/";
+}
+
 // Find a modinfo corresponding to the given game name.
 static const game_modinfo_t *lookup_game(const char *name)
 {
@@ -122,7 +129,7 @@ static const game_modinfo_t *lookup_game(const char *name)
 			if (!knowndll)
 				continue;
 
-			Q_snprintf(temp, sizeof temp, "dlls/%s", knowndll);
+			Q_snprintf(temp, sizeof temp, "%s%s", known_dll_folder(knowndll), knowndll);
 			if (is_file_exists_in_gamedir(temp))
 				return &known;
 		}
@@ -251,7 +258,7 @@ bool setup_gamedll(gamedll_t *gamedll)
 	}
 	// Else use Known-list dll.
 	else if (known) {
-		Q_snprintf(gamedll->pathname, sizeof(gamedll->pathname), "%s/dlls/%s", gamedll->gamedir, knownfn);
+		Q_snprintf(gamedll->pathname, sizeof(gamedll->pathname), "%s/%s%s", gamedll->gamedir, known_dll_folder(knownfn), knownfn);
 	}
 	else {
 		// Neither override nor known-list found a gamedll.
@@ -270,7 +277,7 @@ bool setup_gamedll(gamedll_t *gamedll)
 	// If found, store also the supposed "real" dll path based on the
 	// gamedir, in case it differs from the "override" dll path.
 	if (known && override) {
-		Q_snprintf(gamedll->real_pathname, sizeof(gamedll->real_pathname), "%s/dlls/%s", gamedll->gamedir, knownfn);
+		Q_snprintf(gamedll->real_pathname, sizeof(gamedll->real_pathname), "%s/%s%s", gamedll->gamedir, known_dll_folder(knownfn), knownfn);
 	}
 	else {
 		Q_strlcpy(gamedll->real_pathname, gamedll->pathname);
