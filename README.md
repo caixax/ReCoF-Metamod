@@ -1,3 +1,9 @@
+# ReCoF Metamod
+
+Metamod-r for the [ReCoF Server](https://github.com/caixax/ReCoF-Server), the Cry of Fear dedicated server. It knows Cry of Fear (game folder `cryoffear`, game dll `cl_dlls/hl.dll`) and its bundled SDK has Cry of Fear's structure changes (two more `entvars_t` fields, `usercmd_t.is_donator`, `clientdata_t.isdonator`). Everything else is upstream Metamod-r, under its GPL v3 license; the original README follows.
+
+---
+
 # [Metamod-r](https://github.com/rehlds/metamod-r) [![Percentage of issues still open](http://isitmaintained.com/badge/open/rehlds/metamod-r.svg)](http://isitmaintained.com/project/rehlds/metamod-r "Percentage of issues still open") [![GitHub license](https://img.shields.io/github/license/rehlds/metamod-r.svg?longCache=true&style=flat-square)](https://github.com/rehlds/metamod-r/blob/master/LICENSE)
 
 **Metamod-r** is based on the original version of [Metamod](http://metamod.org/) written by _Will Day_ for Half-Life 1 with some improvements from [Jussi Kivilinna](https://github.com/jkivilin) ([Metamod-p](https://github.com/jkivilin/metamod-p)). This product contains a large number of performance optimizations and more pure code. The core was written using JIT compiler.
