@@ -184,6 +184,8 @@ typedef struct clientdata_s
 	vec3_t				vuser2;
 	vec3_t				vuser3;
 	vec3_t				vuser4;
+
+	int					isdonator;	// Cry of Fear
 } clientdata_t;
 
 #include "weaponinfo.h"
